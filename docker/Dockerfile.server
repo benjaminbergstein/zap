@@ -1,0 +1,16 @@
+FROM node:latest
+
+WORKDIR /app
+
+ADD package.json /app
+RUN yarn config set modules-directory /vendor/node_modules
+RUN yarn --modules-directory=/vendor/node_modules
+
+ADD prisma /app
+RUN yarn --modules-directory=/vendor/node_modules run prisma generate
+
+ADD . /app
+
+ENTRYPOINT ["yarn", "--modules-directory", "/vendor/node_modules"]
+
+CMD ["start"]
