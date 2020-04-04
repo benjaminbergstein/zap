@@ -1,0 +1,9 @@
+[
+  { "name": "gameSystem", "value": "pew" },
+  { "name": "acceptingPlayers", "value": "1" },
+  { "name": "roundNumber", "value": "1" },
+  { "name": "turnPlayer", "value": "1" },
+  { "name": "minPlayers", "value": "3" },
+  { "name": "maxPlayers", "value": "7" },
+  { "name": "initialHandSize", "value": "4" }
+]

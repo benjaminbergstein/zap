@@ -17,8 +17,17 @@ model Game {
   creator   Player @relation(name: "gameCreators", fields: [creatorId], references: [id])
   creatorId  Int
   players   Player[] @relation(name: "gamePlayers", references: [id])
+  attributes GameAttribute[]
 
   @@index([creatorId], name: "creatorId")
+}
+
+model GameAttribute {
+  id        Int      @default(autoincrement()) @id
+  gameId    Int
+  game      Game @relation(fields: [gameId], references: [id])
+  name      String
+  value     String
 }
 
 model Player {

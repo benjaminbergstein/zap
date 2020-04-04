@@ -3,6 +3,8 @@ db-init:
 
 db-migrate:
 	${DOCKER_RUN} server prisma migrate save --name ${MIGRATION} --experimental
+
+db-up:
 	${DOCKER_RUN} server prisma migrate up --experimental
 
 db-client-generate:

@@ -2,7 +2,7 @@ const { gql } = require('apollo-server');
 
 export default gql`
   type Player {
-    id: Int!
+    id: ID!
     name: String!
     games: [Game]!
   }
@@ -14,10 +14,16 @@ export default gql`
     players: [Player]!
   }
 
+  type GameAttribute {
+    name: String!
+    value: String!
+  }
+
   type Query {
     games(includePlayers: Boolean): [Game]!
     players: [Player]!
     me(token: String!): Player
+    gameAttributes(gameId: Int!): [GameAttribute]
   }
 
   type Authorization {
@@ -27,5 +33,7 @@ export default gql`
   type Mutation {
     signUp(name: String!): Authorization!
     signIn(name: String!): Authorization!
+    createGameAttribute(gameId: Int!, name: String!, value: String!): GameAttribute
+    createGame(token: String!, title: String!, template: String!): Game
   }
 `

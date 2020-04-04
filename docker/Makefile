@@ -41,5 +41,8 @@ console:
 attach:
 	${DOCKER_COMPOSE} exec ${SERVICE} /bin/bash
 
+psql:
+	psql -h localhost -U ${POSTGRES_USER} ${POSTGRES_DB}
+
 package.json:
 	${DOCKER_RUN} --entrypoint cat ${SERVICE} package.json > ../${SERVICE}/package.json

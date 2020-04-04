@@ -1,6 +1,6 @@
-# Migration `20200403224007-init`
+# Migration `20200404113542-init`
 
-This migration has been generated at 4/3/2020, 10:40:07 PM.
+This migration has been generated at 4/4/2020, 11:35:42 AM.
 You can check out the [state of the schema](./schema.prisma) after the migration.
 
 ## Database Steps
@@ -11,6 +11,14 @@ CREATE TABLE "public"."Game" (
     "creatorId" integer  NOT NULL ,
     "id" SERIAL,
     "title" text  NOT NULL ,
+    PRIMARY KEY ("id")
+) 
+
+CREATE TABLE "public"."GameAttribute" (
+    "gameId" integer  NOT NULL ,
+    "id" SERIAL,
+    "name" text  NOT NULL ,
+    "value" text  NOT NULL ,
     PRIMARY KEY ("id")
 ) 
 
@@ -33,6 +41,8 @@ CREATE  INDEX "_gamePlayers_B_index" ON "public"."_gamePlayers"("B")
 
 ALTER TABLE "public"."Game" ADD FOREIGN KEY ("creatorId")REFERENCES "public"."Player"("id") ON DELETE CASCADE  ON UPDATE CASCADE
 
+ALTER TABLE "public"."GameAttribute" ADD FOREIGN KEY ("gameId")REFERENCES "public"."Game"("id") ON DELETE CASCADE  ON UPDATE CASCADE
+
 ALTER TABLE "public"."_gamePlayers" ADD FOREIGN KEY ("A")REFERENCES "public"."Game"("id") ON DELETE CASCADE  ON UPDATE CASCADE
 
 ALTER TABLE "public"."_gamePlayers" ADD FOREIGN KEY ("B")REFERENCES "public"."Player"("id") ON DELETE CASCADE  ON UPDATE CASCADE
@@ -42,10 +52,10 @@ ALTER TABLE "public"."_gamePlayers" ADD FOREIGN KEY ("B")REFERENCES "public"."Pl
 
 ```diff
 diff --git schema.prisma schema.prisma
-migration ..20200403224007-init
+migration ..20200404113542-init
 --- datamodel.dml
 +++ datamodel.dml
-@@ -1,0 +1,29 @@
+@@ -1,0 +1,38 @@
 +// This is your Prisma schema file,
 +// learn more about it in the docs: https://pris.ly/d/prisma-schema
 +
@@ -65,8 +75,17 @@ migration ..20200403224007-init
 +  creator   Player @relation(name: "gameCreators", fields: [creatorId], references: [id])
 +  creatorId  Int
 +  players   Player[] @relation(name: "gamePlayers", references: [id])
++  attributes GameAttribute[]
 +
 +  @@index([creatorId], name: "creatorId")
++}
++
++model GameAttribute {
++  id        Int      @default(autoincrement()) @id
++  gameId    Int
++  game      Game @relation(fields: [gameId], references: [id])
++  name      String
++  value     String
 +}
 +
 +model Player {
