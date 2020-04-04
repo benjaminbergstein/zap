@@ -26,8 +26,6 @@ build:
 		-f ./Dockerfile.${SERVICE} \
 		-t ${SERVICE_IMAGE}:${DOCKER_TAG}
 
-console:
-
 start:
 	${DOCKER_COMPOSE} up -d
 
@@ -39,6 +37,9 @@ stop:
 
 console:
 	${DOCKER_RUN} --entrypoint /bin/bash ${SERVICE}
+
+attach:
+	${DOCKER_COMPOSE} exec ${SERVICE} /bin/bash
 
 package.json:
 	${DOCKER_RUN} --entrypoint cat ${SERVICE} package.json > ../${SERVICE}/package.json

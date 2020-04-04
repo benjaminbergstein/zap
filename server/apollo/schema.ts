@@ -17,5 +17,15 @@ export default gql`
   type Query {
     games(includePlayers: Boolean): [Game]!
     players: [Player]!
+    me(token: String!): Player
+  }
+
+  type Authorization {
+    token: String!
+  }
+
+  type Mutation {
+    signUp(name: String!): Authorization!
+    signIn(name: String!): Authorization!
   }
 `

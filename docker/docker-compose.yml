@@ -9,8 +9,10 @@ services:
     environment:
       - PORT
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+      - SECRET
     volumes:
       - .:/app
+      - node_modules:/app/node_modules
     depends_on:
       - db
 
@@ -27,6 +29,8 @@ services:
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
 
+volumes:
+  node_modules:
   # app:
   #   image: 'benbergstein/bread:latest'
   #   ports:
