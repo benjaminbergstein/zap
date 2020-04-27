@@ -34,9 +34,9 @@ export default gql`
     games(includePlayers: Boolean): [Game]!
     players: [Player]!
     me(token: String!): Player
-    gameAttributes(gameId: Int!): [GameAttribute]
-    gameCards(gameId: Int!): [Card]
-    cardAttributes(cardIds: [Int]!): [CardAttribute]
+    gameAttributes(gameId: ID!): [GameAttribute]
+    gameCards(gameId: ID!): [Card]
+    cardAttributes(cardIds: [ID]!): [CardAttribute]
   }
 
   type Authorization {

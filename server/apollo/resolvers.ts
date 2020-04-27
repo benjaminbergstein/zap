@@ -30,7 +30,7 @@ interface GameIdFilter {
 }
 
 interface CardIdFilter {
-  cardIds: number
+  cardIds: number[]
 }
 
 interface TokenContent {
@@ -57,15 +57,17 @@ export default {
     players: () => prisma.player.findMany(),
 
     cardAttributes: async (parent: any, args: CardIdFilter) => {
+      const cardIds = args.cardIds.map((cardId) => parseInt(''+cardId))
       const cardAttributes = await prisma.cardAttribute.findMany({
-        where: { card: { id: { in: args.cardIds } } },
+        where: { card: { id: { in: cardIds } } },
       })
       return cardAttributes
     },
 
     gameCards: async (parent: any, args: GameIdFilter) => {
+      const gameId = parseInt(''+args.gameId)
       const cards = await prisma.card.findMany({
-        where: { game: { id: args.gameId } },
+        where: { game: { id: gameId } },
       })
       return cards
     },

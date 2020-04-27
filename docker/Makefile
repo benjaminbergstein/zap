@@ -2,6 +2,7 @@ export PROJECT=zap
 export ENVIRONMENT ?= development
 export SERVICE ?= server
 export PORT ?= 11000
+export CLIENT_PORT ?= 11001
 
 export POSTGRES_USER=zap
 export POSTGRES_PASSWORD=l@s3r
@@ -12,7 +13,7 @@ SERVICE_IMAGE=${DOCKER_BASE}-${SERVICE}
 DOCKER_TAG ?= latest
 
 define DOCKER_COMPOSE
-docker-compose --project-directory ../server -p zap_${ENVIRONMENT}
+docker-compose --project-directory .. -p zap_${ENVIRONMENT}
 endef
 
 define DOCKER_RUN
@@ -20,6 +21,10 @@ ${DOCKER_COMPOSE} run --rm
 endef
 
 include ${SERVICE}.mk
+
+all:
+	SERVICE=server make build
+	SERVICE=clueboys-client make build
 
 build:
 	docker build ../${SERVICE} \
