@@ -1,0 +1,70 @@
+[
+  {
+    "slug": "pew",
+    "name": "Pew",
+    "description": "Attack a player",
+    "usePolicy": "discard",
+    "targetPolicy": "one-oppenent"
+  },
+  {
+    "slug": "portal",
+    "name": "Portal",
+    "description": "Play out of turn to defend against another player's Pew."
+  },
+  {
+    "slug": "lazer-shield",
+    "name": "Lazer shield",
+    "description": "Protects against pews",
+    "usePolicy": "tableau"
+  },
+  {
+    "slug": "cryostatis",
+    "name": "Cryostatis",
+    "description": "Play on another player. That player may lose a turn.",
+    "usePolicy": "opponent-tableau",
+    "targetPolicy": "one-opponent"
+  },
+  {
+    "slug": "tactical-nuke",
+    "name": "Tactical nuke",
+    "description": "Play out of turn to defend against another player's Pew.",
+    "usePolicy": "tableau"
+  },
+  {
+    "slug": "cantina",
+    "name": "Cantina",
+    "description": "Every player regains a life.",
+    "targetPolicy": "all-players"
+  },
+  {
+    "slug": "emp-shockwave",
+    "name": "EMP shockwave",
+    "description": "Choose another players card to discard.",
+    "targetPolicy": "one-opponent",
+    "cardSelectionPolicy": "hand | tableau"
+  },
+  {
+    "slug": "interstellar-commander",
+    "name": "Interstellar commander",
+    "description": "Wins when all alien invaders are destroyed.",
+    "type": "role"
+  },
+  {
+    "slug": "peace-officer",
+    "name": "Peace officer",
+    "description": "Wins when all alien invaders are destroyed.",
+    "type": "role"
+  },
+  {
+    "slug": "bounty-hunter",
+    "name": "Bounty hunter",
+    "description": "Wins if kills the most other players.",
+    "type": "role"
+  },
+  {
+    "slug": "alien-invader",
+    "name": "Alien invader",
+    "description": "Wins when Interstellar commander is killed.",
+    "type": "role"
+  }
+]

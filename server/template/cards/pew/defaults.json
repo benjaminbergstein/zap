@@ -1,0 +1,7 @@
+{
+  "targetPolicy": "none",
+  "usePolicy": "discard",
+  "cardSelectionPolicy": "none",
+  "location": "deck",
+  "type": "playable"
+}

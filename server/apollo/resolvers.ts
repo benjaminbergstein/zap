@@ -1,9 +1,9 @@
-import fs from 'fs'
 import jwt from 'jsonwebtoken'
-import { PrismaClient, Player } from "@prisma/client"
+import { PrismaClient } from "@prisma/client"
+import createGame from './createGame'
 
-const { SECRET: Secret } = process.env as any
 const prisma = new PrismaClient()
+const { SECRET: Secret } = process.env as any
 
 interface SignInArgs {
   name: string
@@ -19,11 +19,6 @@ interface CreateGameInput {
   template: string
 }
 
-interface Attribute {
-  name: string
-  value: string
-}
-
 interface CreateGameAttributeInput {
   gameId: number
   name: string
@@ -32,6 +27,10 @@ interface CreateGameAttributeInput {
 
 interface GameIdFilter {
   gameId: number
+}
+
+interface CardIdFilter {
+  cardIds: number
 }
 
 interface TokenContent {
@@ -45,12 +44,6 @@ const authenticateToken: (token: string) => number = (token) => {
 
 const generateToken: (id: number) => string = (id) => jwt.sign({ id }, Secret)
 
-const loadTemplate: (template: string) => Promise<Attribute[]> = (template) => new Promise((res) => {
-  fs.readFile(`${process.cwd()}/template/game/${template}.json`, (err, data) => {
-    res(JSON.parse(''+data))
-  })
-})
-
 export default {
   Query: {
     games: (parent: any, args: any, context: any, info: any) => {
@@ -63,12 +56,25 @@ export default {
 
     players: () => prisma.player.findMany(),
 
+    cardAttributes: async (parent: any, args: CardIdFilter) => {
+      const cardAttributes = await prisma.cardAttribute.findMany({
+        where: { card: { id: { in: args.cardIds } } },
+      })
+      return cardAttributes
+    },
+
+    gameCards: async (parent: any, args: GameIdFilter) => {
+      const cards = await prisma.card.findMany({
+        where: { game: { id: args.gameId } },
+      })
+      return cards
+    },
+
     gameAttributes: async (parent: any, args: GameIdFilter) => {
       const gameAttributes = await prisma.gameAttribute.findMany({
         where: { game: { id: args.gameId } },
       })
       return gameAttributes
-      // gameAttribute.findMany({ where: { games: { every: { id: { equals: args.gameId } } } } })
     },
 
     me: async (parent: any, args: any) =>  {
@@ -89,6 +95,7 @@ export default {
       const token = generateToken(players[0].id)
       return { token }
     },
+
     signUp: async (parent: any, args: SignUpArgs) => {
       const { name } = args
       const user = await prisma.player.create({ data: { name } })
@@ -99,30 +106,7 @@ export default {
     createGame: async (parent: any, args: CreateGameInput) => {
       const { title, token, template } = args
       const userId = authenticateToken(token)
-      const game = await prisma.game.create({
-        data: {
-          creator: {
-            connect: { id: userId },
-          },
-          title,
-        },
-      })
-
-      const templateData: Attribute[] = await loadTemplate(template)
-      const createGameAttributes = Promise.all(templateData.map(({ name, value }) => prisma.gameAttribute.create({
-        data: {
-          name,
-          value,
-          game: {
-            connect: {
-              id: game.id,
-            }
-          }
-        },
-      })))
-
-      await createGameAttribute
-
+      const game = await createGame({ userId, template, title })
       return game
     },
 

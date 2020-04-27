@@ -1,0 +1,7 @@
+{
+  "usePolicy": "discard",
+  "location": "deck",
+  "type": "playable",
+  "effect": "none",
+  "position": "-1"
+}

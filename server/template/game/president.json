@@ -1,0 +1,10 @@
+[
+  { "name": "gameSystem", "value": "president" },
+  { "name": "acceptingPlayers", "value": "1" },
+  { "name": "roundNumber", "value": "1" },
+  { "name": "turnPlayer", "value": "1" },
+  { "name": "minPlayers", "value": "2" },
+  { "name": "maxPlayers", "value": "10" },
+  { "name": "initialHandSize", "value": "full-deck" },
+  { "name": "deck", "value": "standard-52" }
+]

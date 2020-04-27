@@ -19,11 +19,24 @@ export default gql`
     value: String!
   }
 
+  type Card {
+    id: ID!
+    slug: String!
+  }
+
+  type CardAttribute {
+    cardId: ID!
+    name: String!
+    value: String!
+  }
+
   type Query {
     games(includePlayers: Boolean): [Game]!
     players: [Player]!
     me(token: String!): Player
     gameAttributes(gameId: Int!): [GameAttribute]
+    gameCards(gameId: Int!): [Card]
+    cardAttributes(cardIds: [Int]!): [CardAttribute]
   }
 
   type Authorization {

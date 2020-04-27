@@ -1,0 +1,322 @@
+[
+  [
+    {
+      "slug": "a-hearts",
+      "name": "A of Hearts",
+      "number": "A",
+      "suit": "hearts"
+    },
+    {
+      "slug": "2-hearts",
+      "name": "2 of Hearts",
+      "number": "2",
+      "suit": "hearts"
+    },
+    {
+      "slug": "3-hearts",
+      "name": "3 of Hearts",
+      "number": "3",
+      "suit": "hearts"
+    },
+    {
+      "slug": "4-hearts",
+      "name": "4 of Hearts",
+      "number": "4",
+      "suit": "hearts"
+    },
+    {
+      "slug": "5-hearts",
+      "name": "5 of Hearts",
+      "number": "5",
+      "suit": "hearts"
+    },
+    {
+      "slug": "6-hearts",
+      "name": "6 of Hearts",
+      "number": "6",
+      "suit": "hearts"
+    },
+    {
+      "slug": "7-hearts",
+      "name": "7 of Hearts",
+      "number": "7",
+      "suit": "hearts"
+    },
+    {
+      "slug": "8-hearts",
+      "name": "8 of Hearts",
+      "number": "8",
+      "suit": "hearts"
+    },
+    {
+      "slug": "9-hearts",
+      "name": "9 of Hearts",
+      "number": "9",
+      "suit": "hearts"
+    },
+    {
+      "slug": "10-hearts",
+      "name": "10 of Hearts",
+      "number": "10",
+      "suit": "hearts"
+    },
+    {
+      "slug": "j-hearts",
+      "name": "J of Hearts",
+      "number": "J",
+      "suit": "hearts"
+    },
+    {
+      "slug": "q-hearts",
+      "name": "Q of Hearts",
+      "number": "Q",
+      "suit": "hearts"
+    },
+    {
+      "slug": "k-hearts",
+      "name": "K of Hearts",
+      "number": "K",
+      "suit": "hearts"
+    }
+  ],
+  [
+    {
+      "slug": "a-spades",
+      "name": "A of Spades",
+      "number": "A",
+      "suit": "spades"
+    },
+    {
+      "slug": "2-spades",
+      "name": "2 of Spades",
+      "number": "2",
+      "suit": "spades"
+    },
+    {
+      "slug": "3-spades",
+      "name": "3 of Spades",
+      "number": "3",
+      "suit": "spades"
+    },
+    {
+      "slug": "4-spades",
+      "name": "4 of Spades",
+      "number": "4",
+      "suit": "spades"
+    },
+    {
+      "slug": "5-spades",
+      "name": "5 of Spades",
+      "number": "5",
+      "suit": "spades"
+    },
+    {
+      "slug": "6-spades",
+      "name": "6 of Spades",
+      "number": "6",
+      "suit": "spades"
+    },
+    {
+      "slug": "7-spades",
+      "name": "7 of Spades",
+      "number": "7",
+      "suit": "spades"
+    },
+    {
+      "slug": "8-spades",
+      "name": "8 of Spades",
+      "number": "8",
+      "suit": "spades"
+    },
+    {
+      "slug": "9-spades",
+      "name": "9 of Spades",
+      "number": "9",
+      "suit": "spades"
+    },
+    {
+      "slug": "10-spades",
+      "name": "10 of Spades",
+      "number": "10",
+      "suit": "spades"
+    },
+    {
+      "slug": "j-spades",
+      "name": "J of Spades",
+      "number": "J",
+      "suit": "spades"
+    },
+    {
+      "slug": "q-spades",
+      "name": "Q of Spades",
+      "number": "Q",
+      "suit": "spades"
+    },
+    {
+      "slug": "k-spades",
+      "name": "K of Spades",
+      "number": "K",
+      "suit": "spades"
+    }
+  ],
+  [
+    {
+      "slug": "a-diamond",
+      "name": "A of Diamond",
+      "number": "A",
+      "suit": "diamond"
+    },
+    {
+      "slug": "2-diamond",
+      "name": "2 of Diamond",
+      "number": "2",
+      "suit": "diamond"
+    },
+    {
+      "slug": "3-diamond",
+      "name": "3 of Diamond",
+      "number": "3",
+      "suit": "diamond"
+    },
+    {
+      "slug": "4-diamond",
+      "name": "4 of Diamond",
+      "number": "4",
+      "suit": "diamond"
+    },
+    {
+      "slug": "5-diamond",
+      "name": "5 of Diamond",
+      "number": "5",
+      "suit": "diamond"
+    },
+    {
+      "slug": "6-diamond",
+      "name": "6 of Diamond",
+      "number": "6",
+      "suit": "diamond"
+    },
+    {
+      "slug": "7-diamond",
+      "name": "7 of Diamond",
+      "number": "7",
+      "suit": "diamond"
+    },
+    {
+      "slug": "8-diamond",
+      "name": "8 of Diamond",
+      "number": "8",
+      "suit": "diamond"
+    },
+    {
+      "slug": "9-diamond",
+      "name": "9 of Diamond",
+      "number": "9",
+      "suit": "diamond"
+    },
+    {
+      "slug": "10-diamond",
+      "name": "10 of Diamond",
+      "number": "10",
+      "suit": "diamond"
+    },
+    {
+      "slug": "j-diamond",
+      "name": "J of Diamond",
+      "number": "J",
+      "suit": "diamond"
+    },
+    {
+      "slug": "q-diamond",
+      "name": "Q of Diamond",
+      "number": "Q",
+      "suit": "diamond"
+    },
+    {
+      "slug": "k-diamond",
+      "name": "K of Diamond",
+      "number": "K",
+      "suit": "diamond"
+    }
+  ],
+  [
+    {
+      "slug": "a-clubs",
+      "name": "A of Clubs",
+      "number": "A",
+      "suit": "clubs"
+    },
+    {
+      "slug": "2-clubs",
+      "name": "2 of Clubs",
+      "number": "2",
+      "suit": "clubs"
+    },
+    {
+      "slug": "3-clubs",
+      "name": "3 of Clubs",
+      "number": "3",
+      "suit": "clubs"
+    },
+    {
+      "slug": "4-clubs",
+      "name": "4 of Clubs",
+      "number": "4",
+      "suit": "clubs"
+    },
+    {
+      "slug": "5-clubs",
+      "name": "5 of Clubs",
+      "number": "5",
+      "suit": "clubs"
+    },
+    {
+      "slug": "6-clubs",
+      "name": "6 of Clubs",
+      "number": "6",
+      "suit": "clubs"
+    },
+    {
+      "slug": "7-clubs",
+      "name": "7 of Clubs",
+      "number": "7",
+      "suit": "clubs"
+    },
+    {
+      "slug": "8-clubs",
+      "name": "8 of Clubs",
+      "number": "8",
+      "suit": "clubs"
+    },
+    {
+      "slug": "9-clubs",
+      "name": "9 of Clubs",
+      "number": "9",
+      "suit": "clubs"
+    },
+    {
+      "slug": "10-clubs",
+      "name": "10 of Clubs",
+      "number": "10",
+      "suit": "clubs"
+    },
+    {
+      "slug": "j-clubs",
+      "name": "J of Clubs",
+      "number": "J",
+      "suit": "clubs"
+    },
+    {
+      "slug": "q-clubs",
+      "name": "Q of Clubs",
+      "number": "Q",
+      "suit": "clubs"
+    },
+    {
+      "slug": "k-clubs",
+      "name": "K of Clubs",
+      "number": "K",
+      "suit": "clubs"
+    }
+  ]
+]
