@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks';
@@ -45,6 +45,7 @@ const Map = styled.div`
 
 
 const Board: React.FC<Props> = ({ gameId }) => {
+  const [showLegend, setShowLegend] = useState<boolean>(false)
   const { loading, error, data } = useQuery(FETCH_GAME, {
     variables: { gameId },
   })
@@ -54,13 +55,25 @@ const Board: React.FC<Props> = ({ gameId }) => {
 
   const { boardCards, mapCards }: GameCardsResponse  = data
 
+  const revealLegend = () => {
+    const hasConfirmed = confirm('Are you certain you want to reveal the legend? This is cheatin\' if you\'re not the codegiver')
+    if (hasConfirmed) setShowLegend(true)
+  }
+
   return <>
     <Wrapper>
       {boardCards.map(({ id: cardId }) => <WordCard cardId={cardId} />)}
     </Wrapper>
-    <Map>
-      {mapCards.map(({ id: cardId }) => <LegendCard cardId={cardId} />)}
-    </Map>
+    {!showLegend && <div>
+      <button onClick={revealLegend}>I am the codegiver, show the legend</button>
+      <p>What's the fun in cheating?</p>
+    </div>}
+    {showLegend && <div>
+      <Map>
+        {mapCards.map(({ id: cardId }) => <LegendCard cardId={cardId} />)}
+      </Map>
+      <a href="javascript:void(0)" onClick={() => setShowLegend(false)}>hide</a>
+    </div>}
   </>
 }
 

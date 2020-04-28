@@ -13,7 +13,7 @@ SERVICE_IMAGE=${DOCKER_BASE}-${SERVICE}
 DOCKER_TAG ?= latest
 
 define DOCKER_COMPOSE
-docker-compose --project-directory .. -p zap_${ENVIRONMENT}
+docker-compose -f ./docker-compose.${ENVIRONMENT}.yml --project-directory .. -p zap_${ENVIRONMENT}
 endef
 
 define DOCKER_RUN
@@ -21,6 +21,9 @@ ${DOCKER_COMPOSE} run --rm
 endef
 
 include ${SERVICE}.mk
+
+release: ENVIRONMENT=production
+release: all stop start
 
 all:
 	SERVICE=server make build

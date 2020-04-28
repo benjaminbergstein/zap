@@ -42,7 +42,7 @@ const Card: React.FC<Props> = ({ cardId }) => {
   })
 
   if (error) return <div>{JSON.stringify(error)}</div>
-  if (loading) return <div>Loading...</div>
+  if (loading) return <div>...</div>
 
   const { cardAttributes } = data
   const affiliation = getAttributeValue(cardAttributes, 'affiliation')
