@@ -22,7 +22,7 @@ font-family: "Helvetica Neue", sans-serif
 
 const Home: React.FC<any> = () => {
   return <Page>
-    <Board gameId="27" />
+    <Board gameId="36" />
   </Page>
 }
 

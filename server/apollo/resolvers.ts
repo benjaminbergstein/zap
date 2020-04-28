@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { PrismaClient } from "@prisma/client"
 import createGame from './createGame'
+import { Attribute } from './createGame/types'
 
 const prisma = new PrismaClient()
 const { SECRET: Secret } = process.env as any
@@ -27,6 +28,10 @@ interface CreateGameAttributeInput {
 
 interface GameIdFilter {
   gameId: number
+}
+
+interface CardFilter extends GameIdFilter {
+  location?: string
 }
 
 interface CardIdFilter {
@@ -64,10 +69,22 @@ export default {
       return cardAttributes
     },
 
-    gameCards: async (parent: any, args: GameIdFilter) => {
+    gameCards: async (parent: any, args: CardFilter) => {
+      const { location } = args
+      const whereCard: any = {}
+
+      if (location) {
+        whereCard.cardAttributes = {
+          some: { name: "location", value: location },
+        }
+      }
+
       const gameId = parseInt(''+args.gameId)
       const cards = await prisma.card.findMany({
-        where: { game: { id: gameId } },
+        where: {
+          ...whereCard,
+          game: { id: gameId }
+        },
       })
       return cards
     },

@@ -2,11 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks';
-import Card from './Card'
+import LegendCard from './LegendCard'
+import WordCard from './WordCard'
 
 const FETCH_GAME = gql`
   query FetchCards($gameId: ID!) {
-    gameCards(gameId: $gameId) {
+    boardCards: gameCards(gameId: $gameId, location: "board") {
+      id
+    }
+    mapCards: gameCards(gameId: $gameId, location: "map") {
       id
     }
   }
@@ -21,18 +25,24 @@ interface Props {
 }
 
 interface GameCardsResponse {
-  gameCards: Card[]
+  boardCards: Card[]
+  mapCards: Card[]
 }
 
 const Wrapper = styled.div`
-  width: 700px;
-  height: 500px;
   font-size: 1.5vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 `
+
+const Map = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 250px;
+`
+
 
 const Board: React.FC<Props> = ({ gameId }) => {
   const { loading, error, data } = useQuery(FETCH_GAME, {
@@ -42,11 +52,16 @@ const Board: React.FC<Props> = ({ gameId }) => {
   if (error) return <div>{JSON.stringify(error)}</div>
   if (loading) return <div>Loading...</div>
 
-  const { gameCards }: GameCardsResponse  = data
+  const { boardCards, mapCards }: GameCardsResponse  = data
 
-  return <Wrapper>
-    {gameCards.map(({ id: cardId }) => <Card cardId={cardId} />)}
-  </Wrapper>
+  return <>
+    <Wrapper>
+      {boardCards.map(({ id: cardId }) => <WordCard cardId={cardId} />)}
+    </Wrapper>
+    <Map>
+      {mapCards.map(({ id: cardId }) => <LegendCard cardId={cardId} />)}
+    </Map>
+  </>
 }
 
 export default Board

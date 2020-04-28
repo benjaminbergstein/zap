@@ -2,9 +2,19 @@
   {
     "slug": "word",
     "name": "Word",
-    "templateFields": ["word"],
+    "templateFields": ["word", "position"],
     "word": "{item}",
+    "position": "{n}",
     "description": "A word on the board",
     "generationPolicy": "sample:25,words.txt"
+  },
+  {
+    "slug": "contact",
+    "name": "Contact location",
+    "templateFields": ["affiliation", "position"],
+    "affiliation": "{item}",
+    "position": "{n}",
+    "location": "map",
+    "generationPolicy": "sample:25,tiles.txt"
   }
 ]

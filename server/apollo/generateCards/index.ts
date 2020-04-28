@@ -30,12 +30,14 @@ const generateCardDefinitions: (
   const [_, fn, ...args] = generationPolicy.match(/^([^:]+):([^,]{1,})(?:,([^,]{1,})){0,}$/) as Array<string>
   const [count, filename] = args
   const listPath = `${process.cwd()}/template/cards/${template}/${filename}`
-  const list: string[] = shuffle((''+(await readFile(listPath))).split("\n")).slice(0, count)
-  return list.map((item) => {
+  const content: string = (''+(await readFile(listPath))).replace(/\n$/, '')
+  const list: string[] = shuffle(content.split("\n")).slice(0, count)
+
+  return list.map((item, index) => {
     return templateFields.reduce((def, fieldName) => {
       return {
         ...def,
-        [fieldName]: def[fieldName].replace("{item}", item)
+        [fieldName]: def[fieldName].replace("{item}", item).replace('{n}', index)
       }
     }, definition)
   })

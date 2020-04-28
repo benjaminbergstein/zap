@@ -35,7 +35,7 @@ export default gql`
     players: [Player]!
     me(token: String!): Player
     gameAttributes(gameId: ID!): [GameAttribute]
-    gameCards(gameId: ID!): [Card]
+    gameCards(gameId: ID!, location: String): [Card]
     cardAttributes(cardIds: [ID]!): [CardAttribute]
   }
 
