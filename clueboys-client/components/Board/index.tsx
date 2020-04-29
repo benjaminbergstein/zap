@@ -1,20 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks';
 import LegendCard from './LegendCard'
 import WordCard from './WordCard'
-
-const FETCH_GAME = gql`
-  query FetchCards($gameId: ID!) {
-    boardCards: gameCards(gameId: $gameId, location: "board") {
-      id
-    }
-    mapCards: gameCards(gameId: $gameId, location: "map") {
-      id
-    }
-  }
-`
+import { FETCH_GAME } from '../../apollo/queries'
 
 interface Card {
   id: string
@@ -43,7 +32,6 @@ const Map = styled.div`
   width: 250px;
 `
 
-
 const Board: React.FC<Props> = ({ gameId }) => {
   const [showLegend, setShowLegend] = useState<boolean>(false)
   const { loading, error, data } = useQuery(FETCH_GAME, {
@@ -62,18 +50,18 @@ const Board: React.FC<Props> = ({ gameId }) => {
 
   return <>
     <Wrapper>
-      {boardCards.map(({ id: cardId }) => <WordCard cardId={cardId} />)}
+      {boardCards.map(({ id: cardId }) => <WordCard gameId={gameId} cardId={cardId} />)}
     </Wrapper>
-    {!showLegend && <div>
-      <button onClick={revealLegend}>I am the codegiver, show the legend</button>
-      <p>What's the fun in cheating?</p>
-    </div>}
-    {showLegend && <div>
+    <div>
+      {!showLegend && <>
+        <button onClick={revealLegend}>I am the codegiver, show the legend</button>
+        <p>What's the fun in cheating?</p>
+      </>}
       <Map>
-        {mapCards.map(({ id: cardId }) => <LegendCard cardId={cardId} />)}
+        {mapCards.map(({ id: cardId }) => <LegendCard isHidden={!showLegend} cardId={cardId} />)}
       </Map>
-      <a href="javascript:void(0)" onClick={() => setShowLegend(false)}>hide</a>
-    </div>}
+      {showLegend && <a href="javascript:void(0)" onClick={() => setShowLegend(false)}>hide</a>}
+    </div>
   </>
 }
 

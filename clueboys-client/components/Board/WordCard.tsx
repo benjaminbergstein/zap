@@ -1,26 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 
-import { FETCH_CARD_ATTRIBUTES } from '../../apollo/queries'
+import { FETCH_CARD_ATTRIBUTES, QUERY_GAME_CARDS } from '../../apollo/queries'
 import { getAttributeValue } from '../../apollo/utils'
+import Wrapper from './CardWrapper'
 
 interface Props {
   cardId: string
+  gameId: string
 }
-
-const Wrapper = styled.div`
-  flex-basis: 20%;
-  flex-grow: 1;
-  flex-shrink: 0;
-  display: flex;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-`
 
 interface BoardCardProps {
   color: string
@@ -50,34 +39,55 @@ const Colors: { [affiliation: string]: string[] } = {
   blue: ['#005aff', '#d7e5ff'],
   red: ['#d14343', '#ffd0d0'],
   assassin: ['black', 'white'],
-  neutral: ['#fff7e7', '#B78934'],
+  unknown: ['#fff7e7', '#B78934'],
+  neutral: ['#b78834', '#fff6e7'],
 }
 
-const getColorByIndex: (index: number) => string[] = (index) => {
-  const color = Object.keys(Colors)[index]
-  return Colors[color]
-}
-
-const Card: React.FC<Props> = ({ cardId }) => {
-  const [colorIndex, setColorIndex] = useState<number>(3)
-  const [background, color] = getColorByIndex(colorIndex)
-
+const Card: React.FC<Props> = ({ gameId, cardId }) => {
+  const [affiliation, setAffiliation] = useState<string>('unknown')
+  const [isRevealed, setRevealed] = useState<boolean>(false)
+  const [background, color] = Colors[isRevealed ? affiliation : 'unknown']
   const { loading, error, data } = useQuery(FETCH_CARD_ATTRIBUTES, {
     variables: { cardId },
   })
+  const [getLegendCard, { called: legendCardCalled, data: legendCardData }] = useLazyQuery(QUERY_GAME_CARDS);
+  const [getLegendCardAttributes, { data: legendCardAttributeData }] = useLazyQuery(FETCH_CARD_ATTRIBUTES);
+
+  const notThisCard: (card: { id: string }) => boolean = ({ id }) => id != cardId
+
+  useEffect(() => {
+    if (!legendCardData) return
+
+    const { gameCardsWithAttribute: possibleLegendCards } = legendCardData
+    const legendCard = possibleLegendCards.find(notThisCard)
+    getLegendCardAttributes({ variables: { cardId: legendCard.id } })
+  }, [legendCardData])
+
+  useEffect(() => {
+    if (!legendCardAttributeData) return
+    const { cardAttributes: legendCardAttributes } = legendCardAttributeData
+    const color = getAttributeValue(legendCardAttributes, 'affiliation')
+    setAffiliation(color)
+  }, [legendCardAttributeData])
 
   if (error) return <div>{JSON.stringify(error)}</div>
   if (loading) return <div>Loading...</div>
 
   const { cardAttributes } = data
+  const position = getAttributeValue(cardAttributes, 'position')
   const label = getAttributeValue(cardAttributes, 'word')
 
-  const handleClick: () => void = () => {
-    const colorCount = Object.keys(Colors).length
-    setColorIndex((colorIndex + 1) % colorCount)
+  if (!legendCardCalled) {
+    getLegendCard({
+      variables: { gameId, name: "position", value: position }
+    })
   }
 
-  return <Wrapper onClick={handleClick}>
+  const handleClick: () => void = () => {
+    setRevealed(true)
+  }
+
+  return <Wrapper position={position} onClick={handleClick}>
     <BoardCard background={background} color={color}>
       {label}
     </BoardCard>

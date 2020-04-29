@@ -4,23 +4,12 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { FETCH_CARD_ATTRIBUTES } from '../../apollo/queries'
 import { getAttributeValue } from '../../apollo/utils'
+import Wrapper from './CardWrapper'
 
 interface Props {
   cardId: string
+  isHidden: boolean
 }
-
-const Wrapper = styled.div`
-  flex-basis: 20%;
-  flex-grow: 1;
-  flex-shrink: 0;
-  display: flex;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-`
 
 const Colors: { [affiliation: string]: string } = {
   blue: '#005aff',
@@ -36,18 +25,20 @@ const MapComponent = styled.div`
   background: ${(props: { affiliation: string }) => Colors[props.affiliation] || 'orange'}
 `
 
-const Card: React.FC<Props> = ({ cardId }) => {
+const Card: React.FC<Props> = ({ cardId, isHidden }) => {
   const { loading, error, data } = useQuery(FETCH_CARD_ATTRIBUTES, {
     variables: { cardId },
   })
 
+  if (isHidden) return null
   if (error) return <div>{JSON.stringify(error)}</div>
   if (loading) return <div>...</div>
 
   const { cardAttributes } = data
+  const position = getAttributeValue(cardAttributes, 'position')
   const affiliation = getAttributeValue(cardAttributes, 'affiliation')
 
-  return <Wrapper><MapComponent affiliation={affiliation} /></Wrapper>
+  return <Wrapper position={position}><MapComponent affiliation={affiliation} /></Wrapper>
 }
 
 export default Card

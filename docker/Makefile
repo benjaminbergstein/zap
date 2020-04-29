@@ -8,6 +8,10 @@ export POSTGRES_USER=zap
 export POSTGRES_PASSWORD=l@s3r
 export POSTGRES_DB=zap_${ENVIRONMENT}
 
+export HOST ?= dev-2.wips.link
+export SERVER_URL ?= http://server:3000
+export CLIENT_URL ?= http://${HOST}:${PORT}
+
 export DOCKER_BASE=benbergstein/${PROJECT}
 SERVICE_IMAGE=${DOCKER_BASE}-${SERVICE}
 DOCKER_TAG ?= latest

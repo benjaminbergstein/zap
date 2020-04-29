@@ -7,9 +7,12 @@ services:
       - ${CLIENT_PORT}:3000
     volumes:
       - ./clueboys-client:/app
+      - node_modules2:/app/node_modules
     command: ["dev"]
     environment:
       - PORT=3000
+      - SERVER_URL
+      - CLIENT_URL
     depends_on:
       - server
 
@@ -43,6 +46,7 @@ services:
 
 volumes:
   node_modules:
+  node_modules2:
   # app:
   #   image: 'benbergstein/bread:latest'
   #   ports:

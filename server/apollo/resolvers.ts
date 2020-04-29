@@ -30,8 +30,14 @@ interface GameIdFilter {
   gameId: number
 }
 
+interface CardAttribute {
+  name: string
+  value: string
+}
+
 interface CardFilter extends GameIdFilter {
   location?: string
+  attribute?: CardAttribute[]
 }
 
 interface CardIdFilter {
@@ -67,6 +73,24 @@ export default {
         where: { card: { id: { in: cardIds } } },
       })
       return cardAttributes
+    },
+
+    gameCardsWithAttribute: async (parent: any, args: CardFilter) => {
+      const { attribute } = args
+      const whereCard: any = {}
+
+      if (attribute) {
+        whereCard.cardAttributes = { some: attribute }
+      }
+
+      const gameId = parseInt(''+args.gameId)
+      const cards = await prisma.card.findMany({
+        where: {
+          ...whereCard,
+          game: { id: gameId }
+        },
+      })
+      return cards
     },
 
     gameCards: async (parent: any, args: CardFilter) => {
