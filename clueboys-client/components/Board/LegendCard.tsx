@@ -35,8 +35,8 @@ const Card: React.FC<Props> = ({ cardId, isHidden }) => {
   if (loading) return <div>...</div>
 
   const { cardAttributes } = data
-  const position = getAttributeValue(cardAttributes, 'position')
-  const affiliation = getAttributeValue(cardAttributes, 'affiliation')
+  const position = getAttributeValue(cardAttributes, 'position', '0')
+  const affiliation = getAttributeValue(cardAttributes, 'affiliation', 'neutral')
 
   return <Wrapper position={position}><MapComponent affiliation={affiliation} /></Wrapper>
 }

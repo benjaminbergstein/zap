@@ -30,6 +30,12 @@ interface GameIdFilter {
   gameId: number
 }
 
+interface SetCardAttributeInput {
+  cardId: number
+  name: string
+  value: string
+}
+
 interface CardAttribute {
   name: string
   value: string
@@ -115,7 +121,7 @@ export default {
 
     gameAttributes: async (parent: any, args: GameIdFilter) => {
       const gameAttributes = await prisma.gameAttribute.findMany({
-        where: { game: { id: args.gameId } },
+        where: { game: { id: +args.gameId } },
       })
       return gameAttributes
     },
@@ -151,6 +157,29 @@ export default {
       const userId = authenticateToken(token)
       const game = await createGame({ userId, template, title })
       return game
+    },
+
+    setCardAttributeValue: async (parent: any, args: SetCardAttributeInput) => {
+      const { cardId: _cardId, name, value } = args
+      const cardId = +_cardId
+      const existingCardAttribute = (await prisma.cardAttribute.findMany({
+        where: { cardId, name },
+      }))[0]
+
+      if (existingCardAttribute) {
+        return await prisma.cardAttribute.update({
+          where: { id: existingCardAttribute.id },
+          data: { value },
+        })
+      }
+
+      return await prisma.cardAttribute.create({
+        data: {
+          name,
+          value,
+          card: { connect: { id: cardId } },
+        },
+      })
     },
 
     createGameAttribute: async (parent: any, args: CreateGameAttributeInput) => {

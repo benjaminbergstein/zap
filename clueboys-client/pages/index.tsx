@@ -1,15 +1,48 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useMutation } from '@apollo/react-hooks';
+import Router from 'next/router'
+
 import withData from '../apollo/withData'
-import Board from '../components/Board'
+import { CREATE_GAME } from '../apollo/queries'
 
 const Page = styled.div`
-font-family: "Helvetica Neue", sans-serif
+  font-family: "Helvetica Neue", sans-serif
 `
 
 const Home: React.FC<any> = () => {
+  const [title, setTitle] = useState<string>('')
+  const [createGame, { called, data, loading }] =  useMutation(CREATE_GAME, {
+    variables: { title }
+  })
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    createGame()
+  }
+
+  useEffect(() => {
+    if (called && data) {
+      const { createGame: { id } } = data
+      Router.push(`/games/${id}`, undefined, { shallow: true })
+    }
+  }, [called, data])
+
   return <Page>
-    <Board gameId="1" />
+    <h1>Create a game</h1>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <div>Name</div>
+          <div>
+            <input defaultValue={title} onChange={(e) => setTitle(e.target.value)} />
+          </div>
+          <div>
+            <button disabled={loading} onClick={handleSubmit}>Create</button>
+          </div>
+        </label>
+      </form>
+    </div>
   </Page>
 }
 

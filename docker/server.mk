@@ -9,3 +9,6 @@ db-up:
 
 db-client-generate:
 	${DOCKER_RUN} server prisma generate
+
+types.d.ts:
+	docker cp zap_development_server_1:/app/node_modules/@prisma/client/index.d.ts ../types.d.ts

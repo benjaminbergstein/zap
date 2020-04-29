@@ -1,5 +1,5 @@
 import { withData } from 'next-apollo'
-import { HttpLink } from 'apollo-boost'
+import { BatchHttpLink } from "apollo-link-batch-http";
 import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
@@ -8,8 +8,9 @@ const serverUri = process.env.SERVER_URL
 const clientUri = publicRuntimeConfig.CLIENT_URL
 
 const config = {
-  link: new HttpLink({
-    uri: isServer ? serverUri : clientUri
+  link: new BatchHttpLink({
+    uri: isServer ? serverUri : clientUri,
+    batchInterval: 300,
   })
 }
 

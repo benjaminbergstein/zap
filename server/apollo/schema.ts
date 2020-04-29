@@ -25,6 +25,7 @@ export default gql`
   }
 
   type CardAttribute {
+    id: ID!
     cardId: ID!
     name: String!
     value: String!
@@ -54,5 +55,6 @@ export default gql`
     signIn(name: String!): Authorization!
     createGameAttribute(gameId: Int!, name: String!, value: String!): GameAttribute
     createGame(token: String!, title: String!, template: String!): Game
+    setCardAttributeValue(cardId: ID!, name: String!, value: String!): CardAttribute
   }
 `
