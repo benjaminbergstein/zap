@@ -7,6 +7,8 @@ services:
       - PORT=3000
     depends_on:
       - server
+    networks:
+      - haproxy-controller_haproxy-controller
 
   server:
     image: benbergstein/zap-server:latest
@@ -16,6 +18,8 @@ services:
       - SECRET
     depends_on:
       - db
+    networks:
+      - haproxy-controller_haproxy-controller
 
   db:
     image: postgres
@@ -27,6 +31,9 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - ./server/data/production/postgres:/var/lib/postgresql/data
+    networks:
+      - haproxy-controller_haproxy-controller
 
-volumes:
-  node_modules:
+networks:
+   haproxy-controller_haproxy-controller:
+      external: true

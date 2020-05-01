@@ -1,5 +1,11 @@
 FROM node:latest
 
+ARG CLIENT_URL
+ENV CLIENT_URL=$CLIENT_URL
+
+ARG TOKEN
+ENV TOKEN=$TOKEN
+
 WORKDIR /app
 
 ADD package.json yarn.lock /app/

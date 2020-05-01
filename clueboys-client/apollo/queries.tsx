@@ -1,11 +1,11 @@
 import { gql } from 'apollo-boost'
 
 export const CREATE_GAME = gql`
-  mutation CreateGame($title: String!) {
+  mutation CreateGame($title: String!, $token: String!) {
     createGame(
       title: $title,
       template: "clueboys",
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg4MTMyODgxfQ.axN7BMCHNNYqij75vf5zPtF9xID4LXbAL9vEFqvcm-Y"
+      token: $token,
     ) {
       id
     }

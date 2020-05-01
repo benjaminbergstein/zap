@@ -24,9 +24,13 @@ define DOCKER_RUN
 ${DOCKER_COMPOSE} run --rm
 endef
 
+define BUILD_ARGS
+endef
+
 include ${SERVICE}.mk
 
 release: ENVIRONMENT=production
+release: CLIENT_URL=http://zap.production.wips.link
 release: all stop start
 
 all:
@@ -34,7 +38,7 @@ all:
 	SERVICE=clueboys-client make build
 
 build:
-	docker build ../${SERVICE} \
+	docker build ../${SERVICE} ${BUILD_ARGS} \
 		-f ./Dockerfile.${SERVICE} \
 		-t ${SERVICE_IMAGE}:${DOCKER_TAG}
 
